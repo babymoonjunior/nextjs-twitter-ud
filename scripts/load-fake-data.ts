@@ -44,6 +44,20 @@ async function loadFakeData(numUsers: number = 10) {
       }
     }
 
+    //load fake follows
+    for (const row1 of res.rows) {
+      for (const row2 of res.rows) {
+        if (row1.id != row2.id) {
+          if (Math.random() > 0.5) {
+            await client.query(
+              "insert into follows (user_id, follower_id) values ($1, $2)",
+              [row1.id, row2.id]
+            );
+          }
+        }
+      }
+    }
+
     await client.query("commit");
   } catch (error) {
     await client.query("rollback");
