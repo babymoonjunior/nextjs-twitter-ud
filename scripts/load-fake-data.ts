@@ -20,11 +20,28 @@ async function loadFakeData(numUsers: number = 10) {
   try {
     await client.query("begin");
 
+    //load fake USERS
     for (let i = 0; i < numUsers; i++) {
       await client.query(
         "insert into public.users (username, password, avatar) values ($1, $2, $3)",
         [faker.internet.userName(), "password", faker.image.avatar()]
       );
+    }
+
+    //load fake POSTS
+    const res = await client.query(
+      "select id from public.users order by created_at desc limit $1",
+      [numUsers]
+    );
+    console.log(res.rows);
+
+    for (const row of res.rows) {
+      for (let i = 0; i < Math.ceil(Math.random() * 10); i++) {
+        await client.query(
+          "insert into public.posts (user_id, content) values ($1, $2)",
+          [row.id, faker.lorem.sentence()]
+        );
+      }
     }
 
     await client.query("commit");
