@@ -11,8 +11,10 @@ export default function Form() {
         e.preventDefault();
         setErrors([]);
 
-        if(password != confirmPassword){
-            errors.push("Passwords do not match.");
+        if (password != confirmPassword) {
+            const newErrors = [];
+            newErrors.push("Passwords do not match.");
+            setErrors(newErrors);
             return;
         }
 
@@ -72,6 +74,11 @@ export default function Form() {
                 />
             </div>
             <button type="submit" className="mt-4 bg-slate-900 text-white p-3 rounded-lg">Sign Up</button>
+            {errors.map((error) => {
+                return (
+                    <div key={error} className="text-red-600">{error}</div>
+                )
+            })}
         </form>
     )
 }
