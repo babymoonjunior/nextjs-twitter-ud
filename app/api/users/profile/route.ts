@@ -14,5 +14,5 @@ export async function GET(request: Request) {
   const user = res.rows[0];
 
   //return user data
-  return NextResponse.json({ data: user})
+  return NextResponse.json({ data: user });
 }
