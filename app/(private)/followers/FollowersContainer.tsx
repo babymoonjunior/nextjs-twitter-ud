@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import FollowingList from "./FollowingList";
+import FollowersList from "./FollowersList";
 
-export default function FollowingContainer() {
+export default function FollowersContainer() {
     const [cnt, setCnt] = useState(1);
 
     const pages = [];
     for (let i = 0; i < cnt; i++) {
-        pages.push(<FollowingList index={i} />)
+        pages.push(<FollowersList index={i} />)
     }
 
     return (
